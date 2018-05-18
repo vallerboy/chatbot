@@ -69,7 +69,7 @@ public class ApiController {
         WooResponseModel[] userArray = userResponse.getBody();
 
         if(Arrays.isNullOrEmpty(userArray)){
-            textResponseModelList.add(new TextResponseModel("Nie znaleziono takiego użytkownika :("));
+            textResponseModelList.add(new TextResponseModel("Hm! Wygląda na to, że nie masz żadnych aktywnych boxów pod tym adresem email :("));
             return ResponseEntity.ok(new ChatFuelResponseModel(textResponseModelList));
         }
 
@@ -84,7 +84,7 @@ public class ApiController {
 
         WooResponseModel[] subscriptionArray = subscribeResponse.getBody();
         if(Arrays.isNullOrEmpty(subscriptionArray)){
-            textResponseModelList.add(new TextResponseModel("Ejo! Nie masz żadnych aktywnych boxów"));
+            textResponseModelList.add(new TextResponseModel("Hm! Wygląda na to, że nie masz żadnych aktywnych boxów pod tym adresem email :("));
             return ResponseEntity.ok(new ChatFuelResponseModel(textResponseModelList));
         }
 
