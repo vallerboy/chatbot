@@ -17,11 +17,11 @@ public class Config {
         public UrlBuilder(UrlType urlType){
             switch (urlType){
                 case WOOCOMMERCE: {
-                    startUrl += "https://boxly.pl/wp-json/wc/v1/subscriptions";
+                    startUrl += "https://boxly.pl/wp-json/wc/v2/";
                     break;
                 }
                 case SUBSCRIPTION: {
-                    startUrl += "https://boxly.pl/wp-json/wc/v2/"; //todo edit url
+                    startUrl += "https://boxly.pl/wp-json/wc/v1/subscriptions"; //todo edit url
                     break;
                 }
             }

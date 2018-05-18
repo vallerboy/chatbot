@@ -82,7 +82,7 @@ public class ApiController {
                 .addCustomerParametr(userArray[0].getId()) //Zakładamy, że znajdzie jednego usera
                 .build(), WooResponseModel[].class);
 
-        WooResponseModel[] subscriptionArray = userResponse.getBody();
+        WooResponseModel[] subscriptionArray = subscribeResponse.getBody();
         if(Arrays.isNullOrEmpty(subscriptionArray)){
             textResponseModelList.add(new TextResponseModel("Ejo! Nie masz żadnych aktywnych boxów"));
             return ResponseEntity.ok(textResponseModelList);
