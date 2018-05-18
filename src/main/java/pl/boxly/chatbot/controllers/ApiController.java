@@ -70,7 +70,7 @@ public class ApiController {
 
         if(Arrays.isNullOrEmpty(userArray)){
             textResponseModelList.add(new TextResponseModel("Nie znaleziono takiego użytkownika :("));
-            return ResponseEntity.ok(textResponseModelList);
+            return ResponseEntity.ok(new ChatFuelResponseModel(textResponseModelList));
         }
 
         ResponseEntity<WooResponseModel[]> subscribeResponse  = restTemplate.getForEntity(new Config.UrlBuilder(Config.UrlType.SUBSCRIPTION)
@@ -85,14 +85,14 @@ public class ApiController {
         WooResponseModel[] subscriptionArray = subscribeResponse.getBody();
         if(Arrays.isNullOrEmpty(subscriptionArray)){
             textResponseModelList.add(new TextResponseModel("Ejo! Nie masz żadnych aktywnych boxów"));
-            return ResponseEntity.ok(textResponseModelList);
+            return ResponseEntity.ok(new ChatFuelResponseModel(textResponseModelList));
         }
 
         for (WooResponseModel wooResponseModel : subscriptionArray) {
             textResponseModelList.add(new TextResponseModel(responseService.createResponseForOneSubscription(wooResponseModel)));
         }
 
-        return null;
+        return ResponseEntity.ok(new ChatFuelResponseModel(textResponseModelList));
     }
 
 

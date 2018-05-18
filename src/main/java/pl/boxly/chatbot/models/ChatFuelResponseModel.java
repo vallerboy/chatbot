@@ -9,5 +9,5 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ChatFuelResponseModel {
-    List<TextResponseModel> text;
+    List<TextResponseModel> messages;
 }
