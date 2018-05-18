@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WooResponseModel {
     private String status;
+    private int id;
 
     @JsonProperty("start_date")
     private String startDate;
@@ -23,4 +24,6 @@ public class WooResponseModel {
 
     @JsonProperty("billing_interval")
     private String billingInterval;
+
+
 }

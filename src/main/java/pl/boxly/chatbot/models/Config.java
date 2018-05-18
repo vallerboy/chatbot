@@ -21,7 +21,7 @@ public class Config {
                     break;
                 }
                 case SUBSCRIPTION: {
-                    startUrl += "https://boxly.pl/wp-json/wc/v1/subscriptions"; //todo edit url
+                    startUrl += "https://boxly.pl/wp-json/wc/v2/"; //todo edit url
                     break;
                 }
             }
@@ -35,6 +35,16 @@ public class Config {
 
         public UrlBuilder addIncludeParametr(int include){
             startUrl += "include=" + include;
+            return this;
+        }
+
+        public UrlBuilder addEmailParameter(String email){
+            startUrl += "email=" + email;
+            return this;
+        }
+
+        public UrlBuilder addCustomerParametr(int customerId){
+            startUrl += "customer=" + customerId;
             return this;
         }
 
@@ -53,7 +63,10 @@ public class Config {
             return this;
         }
 
-
+        public UrlBuilder addCustomer(){
+            startUrl += "customers";
+            return this;
+        }
 
         public String build(){
             return startUrl;

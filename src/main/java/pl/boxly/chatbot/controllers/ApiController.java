@@ -1,6 +1,7 @@
 package pl.boxly.chatbot.controllers;
 
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,45 @@ public class ApiController {
 
     @GetMapping("/subscription/all/{email}")
     public ResponseEntity subscriptionStatus(@PathVariable("email") String email){
+        ResponseEntity<WooResponseModel[]> userResponse  = restTemplate.getForEntity(new Config.UrlBuilder(Config.UrlType.WOOCOMMERCE)
+                .addCustomer()
+                .addQuestionMark()
+                .addUserIDParametr(Config.userID)
+                .addAndMark()
+                .addUserSecret(Config.userSecret)
+                .addAndMark()
+                .addEmailParameter(email)
+                .build(), WooResponseModel[].class);
+
+        List<TextResponseModel> textResponseModelList = new ArrayList<>();
+
+
+        WooResponseModel[] userArray = userResponse.getBody();
+
+        if(Arrays.isNullOrEmpty(userArray)){
+            textResponseModelList.add(new TextResponseModel("Nie znaleziono takiego użytkownika :("));
+            return ResponseEntity.ok(textResponseModelList);
+        }
+
+        ResponseEntity<WooResponseModel[]> subscribeResponse  = restTemplate.getForEntity(new Config.UrlBuilder(Config.UrlType.SUBSCRIPTION)
+                .addQuestionMark()
+                .addUserIDParametr(Config.userID)
+                .addAndMark()
+                .addUserSecret(Config.userSecret)
+                .addAndMark()
+                .addCustomerParametr(userArray[0].getId()) //Zakładamy, że znajdzie jednego usera
+                .build(), WooResponseModel[].class);
+
+        WooResponseModel[] subscriptionArray = userResponse.getBody();
+        if(Arrays.isNullOrEmpty(subscriptionArray)){
+            textResponseModelList.add(new TextResponseModel("Ejo! Nie masz żadnych aktywnych boxów"));
+            return ResponseEntity.ok(textResponseModelList);
+        }
+
+        for (WooResponseModel wooResponseModel : subscriptionArray) {
+            textResponseModelList.add(new TextResponseModel(responseService.createResponseForOneSubscription(wooResponseModel)));
+        }
+
         return null;
     }
 
